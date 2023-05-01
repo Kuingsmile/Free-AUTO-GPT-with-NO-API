@@ -28,6 +28,7 @@ if args.hf_token is None or args.chatgpt_token is None:
 
 os.environ["HUGGINGFACEHUB_API_TOKEN"] = args.hf_token
 os.environ["CHATGPT_TOKEN"] = args.chatgpt_token
+os.environ['NO_PROXY'] = 'huggingface.co' # 不走代理
 
 llm= ChatGPTAPI.ChatGPT(token=os.environ["CHATGPT_TOKEN"])
 
@@ -114,7 +115,8 @@ def browse_web_page(url: str) -> str:
     return run_async(async_load_playwright(url))
 
 
-from langchain.tools import BaseTool, DuckDuckGoSearchRun
+from langchain.tools import BaseTool
+from langchain.tools import DuckDuckGoSearchTool as DuckDuckGoSearchRun
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 from pydantic import Field
